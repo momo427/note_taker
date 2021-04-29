@@ -22,6 +22,5 @@ module.exports = app => {
             update();
             return console.log("Added new note:"+newNote.title)
         });
-
     })
 }
