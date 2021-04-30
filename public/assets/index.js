@@ -35,8 +35,8 @@ const getNotes = () =>
   })
   
     .then((response)=> response.json())
-    .then((note)=>{
-      console.log('note', note);
+    .then((notes)=>{
+      console.log('note', notes);
     });
 
 const saveNote = (note) =>
@@ -45,7 +45,7 @@ const saveNote = (note) =>
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(note),
+    body: JSON.stringify(notes),
   });
 
 const deleteNote = (id) =>

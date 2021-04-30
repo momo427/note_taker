@@ -1,3 +1,4 @@
+const app = require("express")();
 const fs = require('fs');
 const path = require('path');
 
@@ -13,6 +14,7 @@ module.exports = app => {
 
             res.json(notes);
         });
+
 
         ///api/notes post route
         app.post("/api/notes", function(req, res){

@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 3002;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static("public")); 
+
 
 // ROUTER
 // The below points our server to a series of "route" files.
@@ -17,7 +18,7 @@ app.use(express.static(__dirname));
 
 require('./public/assets/apiRoutes')(app);
 require('./public/assets/htmlRoutes')(app);
-require('./public/assets/index')
+
 
 // LISTENER
 // The below code effectively "starts" our server
