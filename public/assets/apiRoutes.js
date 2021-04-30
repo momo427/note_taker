@@ -24,5 +24,10 @@ module.exports = app => {
             update();
             return console.log("Added new note:"+newNote.title)
         });
+                // Retrieves a note with specific id
+                app.get("/api/notes/:id", function(req,res) {
+                    // display json for the notes array indices of the provided id
+                    res.json(notes[req.params.id]);
+                });
     })
 }
