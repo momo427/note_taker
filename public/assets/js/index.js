@@ -1,18 +1,15 @@
-
-let $noteTitle;
-let $noteText;
-let $saveNoteBtn;
-let $newNoteBtn;
-let $noteList;
-
-
+let noteTitle;
+let noteText;
+let saveNoteBtn;
+let newNoteBtn;
+let noteList;
 
 if (window.location.pathname === '/notes') {
-  $noteTitle =$('.note-title');
-  $noteText = $('.note-textarea');
-  $saveNoteBtn =$('.save-note');
-  $newNoteBtn = $('.new-note');
-  $noteList = $('.list-container .list-group');
+  noteTitle = document.querySelector('.note-title');
+  noteText = document.querySelector('.note-textarea');
+  saveNoteBtn = document.querySelector('.save-note');
+  newNoteBtn = document.querySelector('.new-note');
+  noteList = document.querySelectorAll('.list-container .list-group');
 }
 
 // Show an element
@@ -28,26 +25,25 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-
-const getNotes = () => {
-  return $.ajax({
-    url: "/api/notes",
-    method: "GET"
+const getNotes = () =>
+  fetch('/api/notes', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
-};
-  
 
-const saveNote = (notes) => {
-  return $.ajax({
-    url: "/api/notes",
-    data: notes,
-    method: "POST"
+const saveNote = (note) =>
+  fetch('/api/notes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(note),
   });
-};
-
 
 const deleteNote = (id) =>
-  fetch(`/notes/${id}`, {
+  fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -63,8 +59,8 @@ const renderActiveNote = () => {
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
   } else {
-    $noteTitle.value = '';
-    $noteText.value = '';
+    noteTitle.value = '';
+    noteText.value = '';
   }
 };
 
@@ -172,17 +168,13 @@ const renderNoteList = async (notes) => {
 };
 
 // Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = function() {
-  return getNotes().then(function(data) {
-    renderNoteList(data);
-  });
-};
+const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
 if (window.location.pathname === '/notes') {
-  saveNoteBtn.addEventListener('click', handleNoteSave);
-  newNoteBtn.addEventListener('click', handleNewNoteView);
-  noteTitle.addEventListener('keyup', handleRenderSaveBtn);
-  noteText.addEventListener('keyup', handleRenderSaveBtn);
+  saveNoteBtn.on('click', handleNoteSave);
+  newNoteBtn.on('click', handleNewNoteView);
+  noteTitle.on('keyup', handleRenderSaveBtn);
+  noteText.on('keyup', handleRenderSaveBtn);
 }
 
 getAndRenderNotes();

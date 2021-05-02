@@ -2,6 +2,8 @@
 // Series of npm packages that we will use to give our server useful functionality
 const fs = require('fs')
 const express = require('express');
+const apiRoutes = require('./apiRoutes');
+const htmlRoutes = require('./htmlRoutes');
 const app = express();
 
 const PORT = process.env.PORT || 3002;
@@ -10,14 +12,9 @@ const PORT = process.env.PORT || 3002;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public")); 
+app.use('/api',apiRoutes)
+app.use('/',htmlRoutes)
 
-
-// ROUTER
-// The below points our server to a series of "route" files.
-// These routes give our server a "map" of how to respond when users visit or request data from various URLs.
-
-require('./public/assets/apiRoutes')(app);
-require('./public/assets/htmlRoutes')(app);
 
 
 // LISTENER
